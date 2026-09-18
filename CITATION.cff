@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: "Angle A: Crash-Consistent Durable Agent Harness (artifact)"
+message: "Cite meiiie/neko-core@c863cc6 and this repository."
+type: software
+authors:
+  - family-names: "Nguyễn"
+    given-names: "Mạnh Hùng"
+repository-code: "https://github.com/meiiie/angle-a"
+license: MIT
