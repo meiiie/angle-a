@@ -22,6 +22,8 @@ crash markers) are not committed here.
 | `confirmatory-neko-acp-llm-F01-Mpay-N30-summary.json` | confirmatory (E-36), LLM driver on ACP session/load, F01 × M-pay, N=30 |
 | `confirmatory-neko-acp-llm-F03-Mpay-N10-summary.json` | pilot (E-38), LLM driver on ACP session/load, F03 × M-pay, N=10 |
 | `confirmatory-neko-acp-llm-F03-Mpay-N30-summary.json` | confirmatory (E-39), LLM driver on ACP session/load, F03 × M-pay, N=30 |
+| `confirmatory-neko-acp-llm-F01-Mpay-glm53flash-N10-summary.json` | pilot (E-40), LLM driver glm-5.3-flash on ACP session/load, F01 × M-pay, N=10 |
+| `confirmatory-neko-acp-llm-F01-Mpay-glm53flash-N30-summary.json` | confirmatory (E-41), LLM driver glm-5.3-flash on ACP session/load, F01 × M-pay, N=30 |
 
 ## Evidence log excerpt: E-20260918-35 / E-20260918-36
 
@@ -32,5 +34,10 @@ crash markers) are not committed here.
 
 - **E-20260918-38** (2026-09-18 ~22:33 ICT): pilot-neko-acp-llm-F03-N10, F03×M-pay×{B2,B3}×N=10, driver=llm glm-5.3 effort=low on ACP session/load @ neko-core c863cc6; B2 authority_resurrection=1.0, mean_charge=1.0, re_approval=0.0, retry=1, dup_rate=0.0; B3 authority_resurrection=0.0, mean_charge=0.0, re_approval=1.0, retry=0, dup_rate=0.0; seal=1.0 both; errors=0; llm_usage total_tokens=5083; auto-proceed N=30.
 - **E-20260918-39** (2026-09-18 ~22:35 ICT): confirm-neko-acp-llm-F03-N30, F03×M-pay×{B2,B3}×N=30, driver=llm glm-5.3 effort=low ACP session/load @ neko-core c863cc6; B2 authority_resurrection=1.0, mean_charge=1.0, re_approval=0.0, retry=1; B3 authority_resurrection=0.0, mean_charge=0.0, re_approval=1.0, retry=0; dup_rate=0.0 both; seal_text_matches_neko_core=1.0 both; errors=0; llm_usage total_tokens=15055; resumed s01–s10; overrun=false; matches scaffold F03 authority pattern.
+
+## Evidence log excerpt: E-20260918-40 / E-20260918-41
+
+- **E-20260918-40** (2026-09-18 ~22:38 ICT): pilot-neko-acp-llm-F01-glm53flash-N10, F01×M-pay×{B2,B3}×N=10, driver=llm glm-5.3-flash effort=low on ACP session/load @ neko-core c863cc6 (harness neko-core@c863cc6+eval-adapter@14cd188+acp-session-load); B2 dup_rate=1.0, mean_charge=2.0, seal=1.0, retry=1; B3 dup_rate=0.0, mean_charge=1.0, seal=1.0, retry=0; seal_text_matches_neko_core=1.0 both; errors=0; llm_usage total_tokens=5378; resumed s01; overrun=false; auto-proceed N=30.
+- **E-20260918-41** (2026-09-18 ~22:42 ICT): confirm-neko-acp-llm-F01-glm53flash-N30, F01×M-pay×{B2,B3}×N=30, driver=llm glm-5.3-flash effort=low ACP session/load @ neko-core c863cc6 (harness neko-core@c863cc6+eval-adapter@14cd188+acp-session-load); B2 dup_rate=1.0, mean_charge=2.0, seal=1.0, retry=1; B3 dup_rate=0.0, mean_charge=1.0, seal=1.0, retry=0; seal_text_matches_neko_core=1.0 both; errors=0; llm_usage total_tokens=15841; resumed s01–s10; overrun=false; matches scaffold F01 dup-charge pattern; second model (glm-5.3-flash) replicates E-36 (glm-5.3) — keep as separate table row per harness_id.
 
 Source: wiii-lab `evidence/EVIDENCE-LOG.md` (synced 2026-09-18).
