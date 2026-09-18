@@ -1,5 +1,7 @@
 # Angle A — crash-consistent durable agent harness
 
+**Paper title:** Ternary Effect Journals and Single-Consume Authority: Tool-Boundary Semantics Against Action Replay
+
 Paper + evaluation artifact for **The Wiii Lab** (`meiiie`).
 
 | Role | Repo |
