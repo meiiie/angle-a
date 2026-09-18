@@ -1,0 +1,5 @@
+*.log
+.DS_Store
+.secrets.env
+eval-harness/bun.lockb
+node_modules/

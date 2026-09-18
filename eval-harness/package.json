@@ -1,0 +1,23 @@
+{
+  "name": "@wiii-lab/eval-harness",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Angle A crash/restore eval scaffold + neko-core-faithful adapter (B0\u2013B3)",
+  "scripts": {
+    "run-cell": "bun run src/cli/run-cell.ts",
+    "smoke": "bun run src/cli/smoke.ts",
+    "smoke-llm": "bun run src/cli/smoke-llm.ts",
+    "dry": "bun run src/cli/run-cell.ts --baseline B0 --fault F01 --mock M-pay --dry",
+    "confirmatory-llm": "bun run src/cli/confirmatory-llm.ts",
+    "spike-seal": "bun run scripts/spike-seal.ts",
+    "smoke-neko-seal": "bun run src/cli/smoke-neko-seal.ts",
+    "confirmatory-neko-seal": "bun run src/cli/confirmatory-neko-seal.ts"
+  },
+  "bin": {
+    "wiii-eval": "./src/cli/run-cell.ts"
+  },
+  "dependencies": {
+    "neko-core": "file:../../repos/neko-core"
+  }
+}

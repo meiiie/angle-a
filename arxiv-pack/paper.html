@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Unknown Outcomes and Authority-Aware Replay</title>
+<style>
+body{font-family:Georgia,serif;max-width:820px;margin:2rem auto;line-height:1.5;padding:0 1rem;color:#222}
+h1,h2,h3{font-family:system-ui,sans-serif}
+table{border-collapse:collapse;margin:1rem 0;font-size:0.92rem;width:100%}
+td,th{border:1px solid #ccc;padding:6px 8px;vertical-align:top}
+hr{border:none;border-top:1px solid #ddd;margin:2rem 0}
+pre{background:#f6f8fa;padding:1rem;overflow:auto}
+.banner{background:#0b3d91;color:#fff;padding:1rem 1.25rem;border-radius:8px;margin-bottom:1.5rem;font-family:system-ui,sans-serif}
+.banner small{opacity:.85}
+</style></head><body>
+<div class="banner"><strong>Angle A — Phase-1 working draft</strong><br/>
+<small>Scripted pilot N=10 · Target: arXiv/workshop → Scopus Q2 · Not submitted · 2026-09-18</small></div>
+<p>% ============================================================================</p>
+<p>% Angle A — Phase-1 working draft (prose-complete; scripted pilot N=10 reported; confirmatory LLM pending)</p>
+<p>% Assembled: 2026-09-18 13:20 UTC</p>
+<p>% Target path: arXiv/workshop → Scopus Q2 systems/SE</p>
+<p>% ============================================================================</p>
+<p></p>
+<h1>Abstract</h1>
+<p>**Angle A** · ≤180 words · Status: draft for No · Lit cutoff: 2026-09-18 · Evidence: E-20260918-17</p>
+<p></p>
+<hr/>
+<p></p>
+<p>Long-running LLM agents that mutate external state remain vulnerable at tool boundaries: session or graph checkpoints restore conversation, but do not prove which side effects already committed. After crash and restore, models may re-synthesize tool arguments, causing duplicate payments, notifications, or writes—Action Replay and Authority Resurrection (ACRFence). We propose a local-first harness semantics that separates transport from effect, keeps a ternary effect journal with an explicit `unknown` state and reconciliation, and consumes artifact-bound authority at confirmation. We formalize invariants I1–I5, map them onto neko-core, and evaluate baselines B0–B3 on mock mutating tools under a locked crash-injection protocol with fixed weights and mandatory model–harness reporting. In a scripted pilot (N=10), F01×M-pay with argument re-synthesis yields B3≻B2 on duplicates (0.0 vs 1.0), and F03 shows B3 uniquely blocking Authority Resurrection; confirmatory LLM-in-the-loop runs remain future work. We do not replace Temporal-style workflow engines or treat MCP support as novelty.</p>
+<p></p>
+<hr/>
+<p></p>
+<p>*Word count: 147 — cite none required in abstract; keys available in body.*</p>
+<p></p>
+<h1>Introduction</h1>
+<p>**Angle A** · Lit cutoff: 2026-09-18 · Status: draft for No  </p>
+<p>**Aligned with:** `outline/formal-model.md` (I1–I5), `outline/positioning-vs-engines.md` (non-goals), `handbook/RQ-AND-CLAIMS.md`</p>
+<p></p>
+<hr/>
+<p></p>
+<p>LLM agents that call mutating tools fail under crash and restore for a reason that is easy to miss in chat-centric designs: a session or graph checkpoint can restore *what was said* without proving *which external effects already happened*. After restore, the model may re-synthesize tool arguments. Servers then treat the new request as fresh work, producing duplicate side effects—payments, notifications, filesystem writes, deploy flags—even when the operator believed the run had only “resumed.” ACRFence names the core threats as Action Replay and Authority Resurrection: re-issuing a mutation without a receipt, and reviving spent approval for a re-synthesized request \cite{acrfence2026}. Classic idempotency keys help only when the *same* key is reused; they do not bind when the harness emits a new identifier for a semantically related call \cite{beyondtokens2026}.</p>
+<p></p>
+<p>Practice and surveys already treat reliability as a *harness* problem. Guidance on long-running agent harnesses stresses cross-session progress and clean handoff across context windows \cite{anthropic2025harnesses}. Harness surveys place Lifecycle and Governance beside Execution, and argue that bottlenecks may sit in the harness as much as in the foundation model \cite{li2026harnesssurvey,guo2026fromqa}. Durable-execution engines go further: Temporal’s Agent Harness offers an outer durable history and a policy seam before tools \cite{temporal2026agentharness}, and systems notes insist that checkpointing conversation state is not durable execution of effects \cite{zylos2026durable}. What remains under-specified for **local-first** agent development environments is a small, measurable semantics at the *tool boundary*: a ternary effect journal that can enter `unknown`, refuse blind replay until reconcile, and **consume** artifact-bound authority on confirm—without claiming to replace workflow fleets.</p>
+<p></p>
+<p>**Claim.** Under intentional crash/restore at tool boundaries, and with model weights fixed, a harness that (1) separates transport from effect, (2) keeps an `unknown` control state with reconciliation, and (3) consumes authority at effect confirmation reduces duplicate external effects relative to checkpoint-only and checkpoint+idempotency-key baselines on a local-first stack (neko-core / wiii), addressing Action Replay and Authority Resurrection. A scripted pilot (N=10) supports this: under F01×M-pay with argument re-synthesis, B3 achieves duplicate_effect_rate 0.0 vs B2’s 1.0 (E-20260918-17); under F03, B3 uniquely blocks Authority Resurrection that B1/B2 exhibit.</p>
+<p></p>
+<p>**Contributions.**</p>
+<p>1. **Formal tool-boundary effect model (I1–I5):** pre-effect durability; unknown ≠ success; no blind replay from unknown; authority intersection narrow-only; authority consumption bound to artifact hash—distinguishing chat memory, effect journal, and procedural workflows \cite{awm2025}.</p>
+<p>2. **Open realization on neko-core:** lift existing pre-effect checkpoints and unknown seals into an explicit effect journal and B3 baseline, with ADE/wiii as deployment context rather than a second novelty claim.</p>
+<p>3. **Crash-injection evaluation protocol:** compare B0–B3 under a fault catalog aligned to ACRFence classes; report model–harness pairs in the spirit of harness-aware eval \cite{harnessbench2026,agencybench2026,hal2025}; primary metric = duplicate external effects per injected fault.</p>
+<p></p>
+<p>**Non-goals (scope).** We do not replace Temporal or Restate; MCP support is wire, not novelty; we do not claim Phase-1 SWE-bench SOTA (mock mutating tools first). Fine-grained permission trees \cite{ac4a2026} are related governance context, not our primary claim.</p>
+<p></p>
+<p>**Paper map.** §2 backgrounds harness durability and the threat model. §3 presents the effect state machine and invariants I1–I5. §4 maps the model onto neko-core. §5 details baselines B0–B3, faults, and metrics. §6 reports scripted pilot results (N=10, incl. F01 re-synthesis); confirmatory LLM cells TBD. §7 discusses limits and local-first positioning. §8 relates prior work; §9 concludes.</p>
+<p></p>
+<hr/>
+<p></p>
+<p>*~520 words · LIT draft · cite keys only from `bib/refs.bib`*</p>
+<p></p>
+<p></p>
+<hr/>
+<p></p>
+<h1>Background and Threat Model</h1>
+<p></p>
+<p>*Inline from Intro + ACRFence classes; expand later if needed. Formal threats: T-AR, T-ARes, T-FS, T-LA in protocols/fault-catalog.md.*</p>
+<p></p>
+<p></p>
+<hr/>
+<p></p>
+<h1>Tool-Boundary Effect Semantics</h1>
+<p></p>
+<p>Canonical formalization: `outline/formal-model.md` (state machine, I1–I5, code mapping, Appendix A audit).</p>
+<p></p>
+<p></p>
+<hr/>
+<p></p>
+<h1>System Realization</h1>
+<p></p>
+<p>neko-core + wiii ADE context; B3 lifts seals into explicit effect journal + authority consume. Details: formal-model §5–6 and eval-harness (scaffold pilots logged under evidence/runs/).</p>
+<p></p>
+<p></p>
+<hr/>
+<p></p>
+<h1>Methods</h1>
+<p>**Angle A** · Lit cutoff: 2026-09-18 · Status: draft for No  </p>
+<p>**Sources:** `protocols/fault-catalog.md`, `protocols/experiment-protocol.md` · **No empirical results in this section**</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>1. Overview</h2>
+<p></p>
+<p>We evaluate whether a tool-boundary harness with ternary effect state and single-consume authority reduces **duplicate external effects** under intentional crash/restore, relative to checkpoint baselines, with **model weights fixed**. Threats follow ACRFence’s Action Replay and Authority Resurrection classes \cite{acrfence2026}. All mutating side effects run through **mock tools** only (no real payment, email, or deploy). Every reported cell identifies a **model–harness pair** in the spirit of harness-aware evaluation \cite{harnessbench2026}.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>2. System under test and baselines</h2>
+<p></p>
+<p>**Harness.** `neko-core` (local-first), identified as `neko-core@&lt;gitsha&gt;`. ADE/`wiii` is deployment context, not a second treatment.</p>
+<p></p>
+<p>**Baselines** (one policy per run; never mixed):</p>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>ID</td><td>Tag</td><td>Recovery policy</td></tr><tr><td>**B0**</td><td>none</td><td>No durable session; crash ⇒ cold start; model may re-issue tools</td></tr><tr><td>**B1**</td><td>session_ckpt</td><td>Persist trajectory; resume may re-drive unanswered / in-flight tools</td></tr><tr><td>**B2**</td><td>ckpt_idem</td><td>B1 + client idempotency key on every mock mutating call</td></tr><tr><td>**B3** (treatment)</td><td>unknown_auth</td><td>B1 + seal-unknown + reconcile-by-inspect + **authority consume at confirm** + authority bound to artifact hash (RQ2)</td></tr></table>
+<p></p>
+<p>B3 realizes the formal machine in `outline/formal-model.md`: transport ≠ effect; interrupted mutations seal as `unknown`; reconcile inspects mock ground truth before any new mutate; spent authority cannot authorize a re-synthesized request.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>3. Mock tools</h2>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>Mock ID</td><td>Tool</td><td>Observable side effect</td></tr><tr><td>M-pay</td><td>`mock_payment_charge`</td><td>`charge_count`, `charges[]`</td></tr><tr><td>M-mail</td><td>`mock_email_notify`</td><td>`emails_sent`</td></tr><tr><td>M-fs</td><td>`mock_fs_write`</td><td>`writes[]`, file bytes, content hash</td></tr><tr><td>M-flag</td><td>`mock_deploy_flag`</td><td>`flag_set_count`, flag value</td></tr></table>
+<p></p>
+<p>Mocks expose deterministic seeds, counter read APIs, optional `idempotency_key`, optional `authority_token` (B3), and crash hooks at the registry boundary. Ground truth is **mock counters / artifact hashes**, not model self-report.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>4. Fault catalog (F01–F10)</h2>
+<p></p>
+<p>Injection points sit at mock / `ToolRegistry` boundaries. Primary threats: **T-AR** Action Replay, **T-ARes** Authority Resurrection, **T-FS** false-success, **T-LA** lost-ack \cite{acrfence2026}.</p>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>ID</td><td>Injection (summary)</td><td>Primary threat</td><td>B3 expectation</td></tr><tr><td>F01</td><td>Kill after mock success, before durable result receipt</td><td>T-LA→T-AR</td><td>Seal unknown; reconcile; no second effect if committed</td></tr><tr><td>F02</td><td>Kill mid-mutation (timeout / SIGKILL in mock body)</td><td>T-LA / T-FS</td><td>`unknown→reconciling`; inspect before retry</td></tr><tr><td>F03</td><td>Restore after approval, before execute</td><td>T-ARes</td><td>Authority bound to artifact hash + effect id; else re-approve</td></tr><tr><td>F04</td><td>After confirm, model re-synthesizes same intent</td><td>T-AR</td><td>Consumed authority + ledger reject second execute</td></tr><tr><td>F05</td><td>Duplicate resume with spent authority token</td><td>T-ARes</td><td>Single-consume deny</td></tr><tr><td>F06</td><td>Transport retry after semantic commit</td><td>T-AR</td><td>Transport retry ≠ effect retry</td></tr><tr><td>F07</td><td>Crash during reconcile of unknown</td><td>T-AR / T-FS</td><td>Sticky unknown until inspect completes</td></tr><tr><td>F08</td><td>Idempotency key present; harness still replays (B2 contrast)</td><td>T-AR / T-FS</td><td>No second execute when reconciled confirmed</td></tr><tr><td>F09</td><td>FS write commits; session checkpoint lags</td><td>T-LA→T-AR</td><td>Reconcile by content hash</td></tr><tr><td>F10</td><td>Payment double-charge under B1 (headline RQ1)</td><td>T-AR</td><td>Reconcile `charge_count`; no second charge</td></tr></table>
+<p></p>
+<p>Optional F11–F12 (client/harness desync; ignore-inspect) are out of scope for the Week-6 go/no-go path.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>5. Experimental design</h2>
+<p></p>
+<p>**Cell** = `(baseline × fault_id × mock_id)` with fixed `(model_id, harness_id)`.</p>
+<p></p>
+<p>- Full catalog: \(4 \times 10 \times 4 = 160\) cells.  </p>
+<p>- **Pilot subset** (engineering-time): M-pay + M-fs × {F01, F02, F03, F06, F09, F10} × B0–B3 = 48 cells.  </p>
+<p>- Meaningless fault×mock pairs are recorded NA with reason—never filled with invented outcomes.</p>
+<p></p>
+<p>**Sample size.** Pilot **N = 10** per cell (estimate duplicate rate and variance). Confirmatory **N ≥ 30** per cell for Wilson/bootstrap CIs on primary contrasts B3 vs B1 and B3 vs B2. Power is recomputed after pilot; this draft states the plan only.</p>
+<p></p>
+<p>**Single-run procedure.** (1) Start harness in baseline mode; register mocks on the sole effect path. (2) Fixed user task requiring one logical mutating effect. (3) Arm injector for `fault_id`. (4) On crash, write marker; restore per baseline. (5) Recover to terminal state or timeout; record latency. (6) Read counters/hashes; write `meta.json`. (7) Reset mock state. B3: missing durable result ⇒ seal unknown ⇒ inspect ⇒ `reconciling→confirmed|rejected`; consume authority only on confirm.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>6. Metrics</h2>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>Metric</td><td>Definition</td><td>Role</td></tr><tr><td>`duplicate_effect_rate`</td><td>Fraction of runs with mock counter increment **&gt;1** for the logical intent</td><td>**Primary (RQ1)**</td></tr><tr><td>`false_success_rate`</td><td>Harness confirms success but mock/artifact disagrees</td><td>Safety</td></tr><tr><td>`recovery_latency_ms`</td><td>Restore start → stable terminal state</td><td>Cost</td></tr><tr><td>`re_approval_rate`</td><td>Fraction needing a new gate approval after restore</td><td>RQ2 / UX</td></tr><tr><td>`authority_resurrection_count`</td><td>Attempts to execute with a **spent** authority token</td><td>**RQ2**</td></tr></table>
+<p></p>
+<p>Secondary: `retry_invoke_count`, `seal_unknown_emitted`, content-hash mismatch (M-fs). Pre-registered primary contrast: **F10 × M-pay × (B3 vs B1)**; other cells secondary.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>7. Model–harness reporting</h2>
+<p></p>
+<p>Every run and aggregate row reports:</p>
+<p></p>
+<pre>
+model_id:    &lt;provider/model@revision&gt;
+harness_id:  neko-core@&lt;gitsha&gt;
+baseline:    none | session_ckpt | ckpt_idem | unknown_auth
+fault_id, mock_id, run_id, evidence_id
+</pre>
+<p></p>
+<p>We do not pool across different `harness_id` without an explicit harness factor, following harness-effect reporting practice \cite{harnessbench2026}. Artifact layout: `evidence/runs/&lt;E-id&gt;/` with `meta.json`, crash markers, and pre/post counters (append-only evidence log).</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>8. Exclusions and integrity</h2>
+<p></p>
+<p>- Mocks only; no real money, SMTP, or production deploy.  </p>
+<p>- No Temporal/workflow-engine replacement claim; MCP is not the contribution.  </p>
+<p>- **No invented run numbers** in this Methods draft or in linked protocols. Pilot evidence IDs for F01–F03 (N=10, scripted) are reported in Results; confirmatory LLM cells remain future work.</p>
+<p></p>
+<hr/>
+<p></p>
+<p>*LIT draft · Methods from locked protocols · cite keys from `bib/refs.bib` only*</p>
+<p></p>
+<p></p>
+<hr/>
+<p></p>
+<h1>Results</h1>
+<p>**Angle A** · Pilot N=10 · Agent: `scripted/always-issue-tool@scaffold` · Harness: `eval-harness@scaffold`  </p>
+<p>**Evidence:** `evidence/runs/pilot-F01-Mpay-N10-summary.json`, `pilot-F02-Mpay-N10-summary.json`, `pilot-F03-Mpay-N10-summary.json`, `pilot-F01-Mfs-N10-summary.json`  </p>
+<p>**Date:** 2026-09-18 ICT · **No invented cells**</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>1. Setup reminder</h2>
+<p></p>
+<p>Each cell uses fixed scripted policy (always issue the mock tool), seeds 1–10, faults from the locked catalog, and baselines B0–B3. Ground truth is mock counters. These pilots validate the **eval harness and RQ trends** under a non-LLM driver; confirmatory LLM-in-the-loop runs remain future work.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>2. F01 — Kill after success, before durable receipt</h2>
+<p></p>
+<p>**M-pay (`mock_payment_charge`).**</p>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>Baseline</td><td>duplicate_effect_rate</td><td>mean charge_count</td><td>seal_unknown_rate</td></tr><tr><td>B0</td><td>1.0</td><td>2.0</td><td>0.0</td></tr><tr><td>B1</td><td>1.0</td><td>2.0</td><td>0.0</td></tr><tr><td>B2</td><td>0.0</td><td>1.0</td><td>0.0</td></tr><tr><td>B3</td><td>0.0</td><td>1.0</td><td>1.0</td></tr></table>
+<p></p>
+<p>**M-fs (`mock_fs_write`)** shows the same pattern: B0/B1 duplicate_rate 1.0 (mean writes 2.0); B2/B3 0.0 (mean writes 1.0); B3 seal_unknown_rate 1.0.</p>
+<p></p>
+<p>**Reading.** Under F01 with a *stable* scripted retry, classic idempotency (B2) already suppresses duplicate counters. B3 matches B2 on duplicates while **always emitting** an unknown seal before reconcile—visible instrumentation of I2/I3 that B2 lacks.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>3. F02 — Kill mid-mutation</h2>
+<p></p>
+<p>**M-pay.**</p>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>Baseline</td><td>duplicate_effect_rate</td><td>mean charge_count</td><td>seal_unknown_rate</td></tr><tr><td>B0</td><td>0.0</td><td>1.0</td><td>0.0</td></tr><tr><td>B1</td><td>0.0</td><td>1.0</td><td>0.0</td></tr><tr><td>B2</td><td>0.0</td><td>1.0</td><td>0.0</td></tr><tr><td>B3</td><td>0.0</td><td>**0.0**</td><td>1.0</td></tr></table>
+<p></p>
+<p>**Reading.** No baseline produced a *counted* duplicate under this scaffold’s mid-body kill+retry model (N=10). B3 uniquely keeps `seal_unknown` and ends with **zero** confirmed charges after reconcile when the mock left no committed receipt—conservative I2 (unknown ≠ success). B0–B2 still report mean charge_count 1.0 (retry completed a charge without an unknown seal). This is a behavioral distinction, not a duplicate-rate win.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>4. F03 — Restore after approval, before execute (RQ2)</h2>
+<p></p>
+<p>**M-pay.**</p>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>Baseline</td><td>duplicate_effect_rate</td><td>mean authority_resurrection</td><td>mean charge_count</td></tr><tr><td>B0</td><td>0.0</td><td>0.0</td><td>1.0</td></tr><tr><td>B1</td><td>0.0</td><td>**1.0**</td><td>1.0</td></tr><tr><td>B2</td><td>0.0</td><td>**1.0**</td><td>1.0</td></tr><tr><td>B3</td><td>0.0</td><td>**0.0**</td><td>**0.0**</td></tr></table>
+<p></p>
+<p>**Reading.** This is the clearest **B3 ≻ B2** signal in the pilot: session checkpoint and idempotency keys do **not** stop Authority Resurrection after restore-before-execute (mean resurrection count 1.0 on B1/B2). B3 refuses to consume a mismatched/spent path, records resurrection 0.0, and performs **no** charge without fresh authority (charge_count 0.0)—aligning with I5 and RQ2.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>5. Cross-fault summary (pilot)</h2>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>Fault</td><td>Where B0/B1 fail</td><td>Where B2 helps</td><td>Where B3 uniquely helps</td></tr><tr><td>F01</td><td>duplicate counters</td><td>yes (same key)</td><td>seal+reconcile (parity on dups)</td></tr><tr><td>F02</td><td>(no dup in scaffold)</td><td>—</td><td>unknown seal; no false confirm</td></tr><tr><td>F03</td><td>—</td><td>**no** (resurrection)</td><td>**blocks resurrection**</td></tr></table>
+<p></p>
+<p>False-success_rate was 0.0 across all reported pilot cells.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>6. Threats to validity (results)</h2>
+<p></p>
+<p>1. **Scripted agent** with harness `--resynthesize` for F01 arg mutation—not a live LLM; full model-driven re-synthesis remains confirmatory work.</p>
+<p>2. **Scaffold harness**, not production neko-core binary path.</p>
+<p>3. **N=10 pilot**, not confirmatory N≥30.</p>
+<p>4. F02 duplicate metric saturated at 0 for all baselines under current crash modeling—needs richer mid-body partial-commit mocks before claiming F02 duplicate wins.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>7. Takeaway for RQ1/RQ2</h2>
+<p></p>
+<p>- **RQ1 (duplicates):** B3 vs B0/B1 on stable-key F01 (0 vs 1); **B3 vs B2 under re-synthesis F01 (0 vs 1)**.</p>
+<p>- **RQ2 (authority):** F03—B3 eliminates Authority Resurrection that B1/B2 exhibit (1.0 → 0.0).</p>
+<p></p>
+<p>Next empirics: confirmatory N≥30; optional LLM-in-the-loop; expand F04–F10.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>8. F01 under semantic re-synthesis (B2 vs B3)</h2>
+<p></p>
+<p>**Driver:** `--resynthesize` mutates idempotency-relevant args on retry (e.g. payment `amount + attempt`) and mints a new idempotency key — ACRFence-style Action Replay when the model does not reuse keys.</p>
+<p></p>
+<p>**M-pay, N=10, seeds 1–10.** Evidence: `evidence/runs/pilot-F01-Mpay-resynth-N10-summary.json`.</p>
+<p></p>
+<table border=1 cellpadding=6 cellspacing=0><tr><td>Baseline</td><td>duplicate_effect_rate</td><td>mean charge_count</td><td>seal_unknown_rate</td></tr><tr><td>B2 (ckpt + idempotency key)</td><td>**1.0**</td><td>2.0</td><td>0.0</td></tr><tr><td>B3 (unknown + reconcile + authority)</td><td>**0.0**</td><td>1.0</td><td>1.0</td></tr></table>
+<p></p>
+<p>**Reading.** When retry arguments change, B2’s idempotency keys no longer collide — duplicate charges return (rate 1.0). B3 still seals unknown and reconciles against the already-committed mock effect, so counters stay at 1.0. This is the primary **RQ1** separation of B3 from B2 under the threat model that motivates the paper.</p>
+<p></p>
+<p>**Updated takeaway.** Stable-key F01 made B2 look equal to B3 on duplicates; **re-synthesis removes that parity**. Combined with F03 (Authority Resurrection blocked only by B3), pilot evidence supports both RQ1 and RQ2 for the scaffold+scripted setting.</p>
+<p></p>
+<p></p>
+<hr/>
+<p></p>
+<h1>Discussion</h1>
+<p>**Angle A** · ~0.75 page · Status: draft for No · Lit cutoff: 2026-09-18  </p>
+<p>**Note:** Pilot N=10 scripted cells are reported in Results; confirmatory LLM runs remain open.</p>
+<p></p>
+<hr/>
+<p></p>
+<h2>Limits of the present draft</h2>
+<p></p>
+<p>This paper’s contribution is **semantic, methodological, and pilot-empirical**. Invariants I1–I5, the B0–B3 contrast, and a locked crash/restore protocol on mock tools are fixed. A scripted pilot (N=10) under the eval scaffold reports directional support for RQ1 on F01 (B3 vs B0/B1) and a clear RQ2 win on F03 (B3 blocks Authority Resurrection that B1/B2 exhibit). These cells validate harness instrumentation and trend direction; they are **not** confirmatory LLM-in-the-loop evidence. Claiming broader quantitative superiority for B3 beyond the reported pilot cells would overreach.</p>
+<p></p>
+<p>The implementation mapping is likewise incomplete by design. neko-core already provides pre-effect durability and unknown seals for interrupted tool calls; single-consume, artifact-hash-bound authority (I5 / RQ2) remains a **research extension** measured in the B3 scaffold, not a claim that production neko already enforces the full machine. Mock tools (payment, notify, filesystem, deploy flag) bound external risk, but they also bound ecological validity: real providers add partial commits, eventual consistency, and policy surfaces our mocks only approximate.</p>
+<p></p>
+<h2>Local-first harness vs Temporal-class engines</h2>
+<p></p>
+<p>Durable workflow engines remain the right outer substrate when operators already run fleets, timers, and cross-service activities \cite{temporal2026agentharness}. Systems commentary that checkpointed chat is not durable execution of effects aligns with our vocabulary split between session memory and an effect journal \cite{zylos2026durable}. Angle A’s non-goal is explicit: we study lighter journal semantics for **local-first** agent development environments (neko-core / wiii), not a replacement for Temporal or Restate. Claiming “exactly-once” in the distributed-systems sense would overreach; we claim a narrower property—fewer duplicate *mock-observable* mutations under a published fault catalog when restore may re-issue tool work \cite{acrfence2026}.</p>
+<p></p>
+<h2>Procedural memory is not control durability</h2>
+<p></p>
+<p>Procedural workflow memory improves how agents reuse multi-step *how-to* knowledge across episodes \cite{awm2025}. That line is complementary and easy to mis-cite as durability. A stored procedure does not certify whether a charge already posted. We therefore keep conversation state, effect journals, and procedural workflows as distinct objects: AWM-style memory is related work for agent competence, not a substitute for I2/I3 reconcile-before-replay.</p>
+<p></p>
+<h2>Threats to validity</h2>
+<p></p>
+<p>**Internal.** Crash injectors must fire at stated boundaries; mis-timed kills confound baseline contrasts. B2 depends on mock key semantics—if keys are recorded only after commit, F02 mid-body kills still permit duplicates, which is informative rather than a harness bug. Authority metrics require that “spent” be durable across resume; otherwise RQ2 is unmeasurable. The pilot’s scripted agent never re-synthesizes arguments, so ACRFence’s hardest semantic-replay case is only partially stressed.</p>
+<p></p>
+<p>**External.** Fixed-driver cells attribute differences to harness policy, not weight updates, but transfer to other models and to non-mock tools is unproven. Pilot N=10 stabilizes rates for headline cells; confirmatory N≥30 and LLM-driven re-synthesis may still change magnitudes.</p>
+<p></p>
+<p>**Construct.** Duplicate_effect_rate on counters is our primary RQ1 construct; it does not capture all user-visible harm (e.g., confusing UX after re-approval). False-success and resurrection counts guard safety constructs tied to ACRFence threats \cite{acrfence2026}. Harness-aware reporting of model–harness pairs reduces scaffold confounding in presentation \cite{harnessbench2026}, but does not by itself validate the full fault suite (F04–F10 still thin).</p>
+<p></p>
+<p>**Conclusion of discussion.** Honest next steps are LLM-in-the-loop cells, richer mid-body mocks for F02, and confirmatory N≥30 on F01+F03—not rhetorical inflation of the pilot. Scope stays master’s-sized: local-first effect semantics, mock crash injection, and clear non-goals relative to workflow engines and MCP novelty.</p>
+<p></p>
+<hr/>
+<p></p>
+<p>*LIT draft · Discussion · cite keys from `bib/refs.bib` only*</p>
+<p></p>
+<h1>Related Work</h1>
+<p>**Angle A** · Lit cutoff: 2026-09-18 · Status: draft for No  </p>
+<p>**Working claim:** Under crash/restore at tool boundaries, an `unknown_outcome` + authority-consumption harness reduces duplicate external effects vs checkpoint-only and checkpoint+idempotency-key baselines (fixed model).</p>
+<p></p>
+<hr/>
+<p></p>
+<p>Long-horizon LLM agents increasingly fail not only because models err, but because *harnesses* lose track of which external mutations already happened. Session and graph checkpoints preserve conversation or control state, yet they do not certify tool-boundary exactly-once semantics when the model *re-synthesizes* arguments after restore. The practical gap is therefore between “resume the chat” and “prove the side effect”: without an explicit effect journal and a policy for interrupted mutations, restore can emit a fresh tool request that servers treat as new work. This section situates that gap against harness practice, durable-execution engines, authority threats, procedural memory, and evaluation methodology, then states how our Angle A contribution—invariants I1–I5—fits the map.</p>
+<p></p>
+<p>**Long-running harness practice.** Production writing already treats reliability as a harness concern. Anthropic’s guidance on effective harnesses for long-running agents emphasizes cross-session progress files, clean repository state, and initializer handoff across context windows \cite{anthropic2025harnesses}. Those practices improve continuity of *work*, but they leave open tool-boundary exactly-once behavior when the model regenerates tool arguments after a crash. Survey work frames the same layer more systematically: Li et al.\ organize harness engineering with an ETCLOVG-style taxonomy in which Lifecycle and Governance sit beside Execution, treating the harness as an independent production layer rather than a thin wrapper around the model \cite{li2026harnesssurvey}. Guo et al.\ complement that view with a model–harness lens and six runtime responsibilities spanning observation through verification, arguing that bottlenecks may sit in harness design as much as in foundation models \cite{guo2026fromqa}. We adopt their vocabulary for *where* durability and authority live, then specialize to crash/restore *effect* semantics that those surveys do not formalize.</p>
+<p></p>
+<p>**Durable execution and the outer harness.** Industry systems synthesis sharpens the distinction between checkpointing and durable execution. Zylos argues that session memory is not an effect journal, and that crash-at-worst-moment testing requires journals, idempotent wrappers, and recovery discipline beyond saving chat state \cite{zylos2026durable}. Temporal’s Agent Harness positions an *outer* harness with durable workflow history, a policy seam before tool execution, and an agent-event stream suitable for multi-service orchestration \cite{temporal2026agentharness}. We cite both as baselines and as **non-replacements**: Angle A studies lighter journal semantics for local-first ADE / coding-agent stacks, not a substitute for Temporal-style workflow fleets, multi-day timers, or cross-service orchestration. In other words, durable history engines own long-running workflow durability; we own ternary effect state and authority consumption at the tool boundary under semantic re-synthesis.</p>
+<p></p>
+<p>**Threats and authority.** ACRFence names the failure modes that motivate our fault catalog: *Action Replay* (re-issuing a mutating call after restore without proving prior outcome) and *Authority Resurrection* (reviving spent approval for a re-synthesized request) \cite{acrfence2026}. Their analysis shows why checkpoint-only restore is unsafe when the model regenerates arguments: the server may see a semantically related but identifier-fresh request. Beyond Single-Use Tokens argues that identifier-local tokens are insufficient and develops durable authorization state (e.g., CapLease / Issue–Prepare–Commit patterns) so approvals cannot be blindly replayed \cite{beyondtokens2026}. We use that line for authority-consume design (bind approval to an artifact hash; consume on confirm), while noting that coupling a consume ledger to an `unknown→reconciling` effect machine remains open—precisely the integration Angle A targets. AC4A contributes fine-grained permissions over API and browser resources \cite{ac4a2026}; we cite it briefly as governance related work, not as our primary claim, because permission trees alone do not specify crash-recovery journals.</p>
+<p></p>
+<p>**Procedural memory is not control durability.** Agent Workflow Memory stores reusable procedural workflows that improve how agents perform web tasks across episodes \cite{awm2025}. That line is valuable for *how-to* reuse, but it must not be confused with an effect journal or durable control plane. Procedural text does not answer whether a payment, deploy flag, or filesystem write already committed; Angle A therefore treats AWM-style workflow memory as orthogonal related work and keeps conversation memory, effect journals, and procedural workflows as distinct objects in the formal model.</p>
+<p></p>
+<p>**Evaluation methodology.** Harness-Bench stresses measuring harness effects across models and reporting model–harness pairs so scaffold choices are not confounded with model quality \cite{harnessbench2026}. AgencyBench highlights scaffold and native-ecosystem effects in long-context agent settings \cite{agencybench2026}. HAL argues for holistic agent evaluation infrastructure, including careful logging and inspection of runs \cite{hal2025}. We adopt their spirit—always report pinned model ID and harness configuration—while keeping a *narrow* crash-injection protocol and duplicate-external-effect metric that those benches do not specialize in. Our B0–B3 baselines (none / session checkpoint / checkpoint+idempotency key / unknown+authority consume) are therefore complementary to broad agent leaderboards, not a replacement for them.</p>
+<p></p>
+<p>**Contribution relative to this map.** Against this landscape, Angle A contributes a published tool-boundary effect semantics with invariants that surveys and blogs leave open: **I1** pre-effect durability (persist enough state before a mutating call that a crash yields a recoverable in-flight record); **I2** unknown ≠ success (interrupted mutations are never labeled success); **I3** no blind replay from unknown (forbid `unknown→executing` with a new effect id until reconcile); **I4** authority intersection narrow-only (effective permission is an intersection that may narrow, never expand host policy); and **I5** authority consumption (confirmation consumes an artifact-bound token so restore cannot resurrect spent \(\kappa\) for re-synthesized arguments). Optional **I6** (provider semantic commit) is implementation context, not the paper’s primary claim. Empirically, we target measured duplicate-effect reduction under intentional kill points on a local-first neko-core / wiii stack, with Temporal and related engines as non-goal baselines rather than competitors we claim to replace. In short: harness surveys give vocabulary, durable engines give outer durability, ACRFence and Beyond Single-Use Tokens give threat and authority names, AWM clarifies a naming trap, and eval benches give reporting hygiene—while the ternary effect journal coupled to authority consume under crash/restore remains the gap we fill.</p>
+<p></p>
+<hr/>
+<p></p>
+<p>*~950 words · LIT draft · cite keys only from `bib/refs.bib` · do not invent venues.*</p>
+<p></p>
+<p></p>
+<hr/>
+<p></p>
+<h1>Conclusion</h1>
+<p>**Angle A** · Target: ~150–200 words · Status: draft for No · Lit cutoff: 2026-09-18</p>
+<p></p>
+<hr/>
+<p></p>
+<p>Tool-calling agents fail under crash and restore when checkpoints remember dialogue but not which mutations already landed. Re-synthesized tool calls then replay effects or resurrect spent approval—the Action Replay and Authority Resurrection threats named by ACRFence \cite{acrfence2026}. This paper argues for a local-first remedy at the tool boundary: separate transport from effect, keep a ternary journal with an explicit `unknown` state and reconcile-before-replay, and consume artifact-bound authority at confirmation (invariants I1–I5), realized as baseline B3 on neko-core / wiii with model weights held fixed.</p>
+<p></p>
+<p>We contributed (i) the formal effect machine and authority rules, (ii) a mapping onto an open local harness, and (iii) a locked crash-injection protocol against B0–B2 on mock mutating tools, with mandatory model–harness reporting. A **scripted pilot (N=10)** supports RQ1 on F01 and RQ2 on F03 under the scaffold; **confirmatory LLM-in-the-loop cells remain open**, so the manuscript is pilot-complete rather than confirmatory-complete. We explicitly do not replace Temporal-class durable engines \cite{temporal2026agentharness}, treat MCP as novelty, or claim SWE-bench SOTA. Next steps are pilot then confirmatory cells under the published fault catalog, then Phase-1 workshop/preprint followed by a systems/SE journal track once numbers exist.</p>
+<p></p>
+<hr/>
+<p></p>
+<h1>Positioning appendix</h1>
+<p></p>
+<p>See `outline/positioning-vs-engines.md`.</p>
+</body></html>

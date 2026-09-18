@@ -1,0 +1,255 @@
+{
+  "protocol": "pilot-F01-Mpay-resynth-N10",
+  "fault_id": "F01",
+  "mock_id": "M-pay",
+  "resynthesize": true,
+  "n_per_baseline": 10,
+  "seeds": "1..10",
+  "model_id": "scripted/always-issue-tool+resynth@scaffold",
+  "harness_id": "eval-harness@scaffold",
+  "written_at_ict": "2026-09-18T20:42:50+07:00",
+  "hypothesis": {
+    "B2": "duplicate_effect_rate rises (new idem keys / mutated amount on retry)",
+    "B3": "stays low via journal seal-unknown + reconcile-by-inspect"
+  },
+  "B2": {
+    "n": 10,
+    "duplicate_effect_rate": 1,
+    "false_success_rate": 0,
+    "seal_unknown_rate": 0,
+    "mean_charge_count_post": 2
+  },
+  "B3": {
+    "n": 10,
+    "duplicate_effect_rate": 0,
+    "false_success_rate": 0,
+    "seal_unknown_rate": 1,
+    "mean_charge_count_post": 1
+  },
+  "headline": {
+    "B2_duplicate_effect_rate": 1,
+    "B3_duplicate_effect_rate": 0
+  },
+  "cells": [
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s01",
+      "seed": 1,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s02",
+      "seed": 2,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s03",
+      "seed": 3,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s04",
+      "seed": 4,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s05",
+      "seed": 5,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s06",
+      "seed": 6,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s07",
+      "seed": 7,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s08",
+      "seed": 8,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s09",
+      "seed": 9,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B2-s10",
+      "seed": 10,
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "seal_unknown_emitted": false,
+      "false_success": false,
+      "outcome": "confirmed",
+      "notes": "resynthesize=on (semantic args mutated on retry)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s01",
+      "seed": 1,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s02",
+      "seed": 2,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s03",
+      "seed": 3,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s04",
+      "seed": 4,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s05",
+      "seed": 5,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s06",
+      "seed": 6,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s07",
+      "seed": 7,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s08",
+      "seed": 8,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s09",
+      "seed": 9,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    },
+    {
+      "evidence_id": "E-pilot-F01-Mpay-resynth-B3-s10",
+      "seed": 10,
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "seal_unknown_emitted": true,
+      "false_success": false,
+      "outcome": "confirmed_via_reconcile",
+      "notes": "resynthesize=requested (B3 reconcile path; no blind re-issue)",
+      "model_id": "scripted/always-issue-tool+resynth@scaffold"
+    }
+  ]
+}

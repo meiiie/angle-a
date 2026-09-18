@@ -1,0 +1,30 @@
+{
+  "B0": {
+    "n": 10,
+    "duplicate_effect_rate": 1.0,
+    "false_success_rate": 0.0,
+    "seal_unknown_rate": 0.0,
+    "mean_charge_count_post": 2.0
+  },
+  "B1": {
+    "n": 10,
+    "duplicate_effect_rate": 1.0,
+    "false_success_rate": 0.0,
+    "seal_unknown_rate": 0.0,
+    "mean_charge_count_post": 2.0
+  },
+  "B2": {
+    "n": 10,
+    "duplicate_effect_rate": 0.0,
+    "false_success_rate": 0.0,
+    "seal_unknown_rate": 0.0,
+    "mean_charge_count_post": 1.0
+  },
+  "B3": {
+    "n": 10,
+    "duplicate_effect_rate": 0.0,
+    "false_success_rate": 0.0,
+    "seal_unknown_rate": 1.0,
+    "mean_charge_count_post": 1.0
+  }
+}
