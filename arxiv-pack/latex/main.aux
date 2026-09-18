@@ -1,0 +1,166 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand*\HyPL@Entry[1]{}
+\citation{acrfence2026}
+\citation{beyondtokens2026}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{anthropic2025harnesses}
+\citation{li2026harnesssurvey,guo2026fromqa}
+\citation{temporal2026agentharness}
+\citation{zylos2026durable}
+\citation{awm2025}
+\citation{harnessbench2026,agencybench2026,hal2025}
+\citation{ac4a2026}
+\@writefile{toc}{\contentsline {paragraph}{Claim.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Contributions.}{2}{section*.2}\protected@file@percent }
+\citation{anthropic2025harnesses}
+\citation{li2026harnesssurvey}
+\citation{guo2026fromqa}
+\citation{zylos2026durable}
+\citation{temporal2026agentharness}
+\citation{acrfence2026}
+\citation{beyondtokens2026}
+\citation{acrfence2026}
+\@writefile{toc}{\contentsline {paragraph}{Non-goals (scope).}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Paper map.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Background and Threat Model}{3}{section.2}\protected@file@percent }
+\newlabel{sec:background}{{2}{3}{Background and Threat Model}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Harness durability vs.\ chat checkpoints}{3}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Threat classes (ACRFence)}{3}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Threat model (ACRFence-style)}{3}{subsection.2.3}\protected@file@percent }
+\newlabel{sec:threat-model}{{2.3}{3}{Threat model (ACRFence-style)}{subsection.2.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Assets / what we protect.}{4}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Adversary models (aligned to ACRFence).}{4}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Invariants we enforce (tie to I2/I3/I5).}{4}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Assumptions.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Out of scope (non-goals).}{4}{section*.9}\protected@file@percent }
+\citation{awm2025}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Effect Model}{5}{section.3}\protected@file@percent }
+\newlabel{sec:model}{{3}{5}{Effect Model}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Objects}{5}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Effect state machine}{5}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Invariants (I1--I5)}{5}{subsection.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Effect journal state machine: \texttt  {proposed}$\to $\texttt  {executing} then \texttt  {confirmed}, \texttt  {rejected}, or \texttt  {unknown}; \texttt  {reconciling} is a subphase of \texttt  {unknown} (inspect before any new mutation).}}{6}{figure.1}\protected@file@percent }
+\newlabel{fig:effect-sm}{{1}{6}{Effect journal state machine: \texttt {proposed}$\to $\texttt {executing} then \texttt {confirmed}, \texttt {rejected}, or \texttt {unknown}; \texttt {reconciling} is a subphase of \texttt {unknown} (inspect before any new mutation)}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Threat alignment}{6}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}System Realization}{6}{section.4}\protected@file@percent }
+\newlabel{sec:system}{{4}{6}{System Realization}{section.4}{}}
+\citation{acrfence2026}
+\citation{harnessbench2026}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Methods}{7}{section.5}\protected@file@percent }
+\newlabel{sec:methods}{{5}{7}{Methods}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Overview}{7}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Baselines}{7}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Mock tools}{7}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Fault catalog (F01--F10)}{8}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Experimental design}{8}{subsection.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sample size.}{8}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single-run procedure.}{8}{section*.11}\protected@file@percent }
+\citation{harnessbench2026}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Mapping of primary eval faults F01--F03 to ACRFence threat classes T-LA (Lost Ack), T-AR (Action Replay), and T-ARes (Authority Resurrection). F01 is T-LA$\to $T-AR; F02 engages T-LA/T-AR under mid-mutation; F03 is T-ARes.}}{9}{figure.2}\protected@file@percent }
+\newlabel{fig:threat-map}{{2}{9}{Mapping of primary eval faults F01--F03 to ACRFence threat classes T-LA (Lost Ack), T-AR (Action Replay), and T-ARes (Authority Resurrection). F01 is T-LA$\to $T-AR; F02 engages T-LA/T-AR under mid-mutation; F03 is T-ARes}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Metrics}{9}{subsection.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}Model--harness reporting}{9}{subsection.5.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.8}Exclusions and integrity}{10}{subsection.5.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Evaluation and Results}{10}{section.6}\protected@file@percent }
+\newlabel{sec:results}{{6}{10}{Evaluation and Results}{section.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Setup reminder.}{10}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}F01 --- Kill after success, before durable receipt}{10}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{M-pay (\texttt  {mock\_payment\_charge}).}{10}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{M-fs (\texttt  {mock\_fs\_write}).}{10}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reading.}{10}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}F02 --- Kill mid-mutation (M-pay)}{11}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reading.}{11}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}F03 --- Restore after approval, before execute (RQ2)}{11}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{M-pay.}{11}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reading.}{11}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}F01 under semantic re-synthesis (B2 vs B3)}{11}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Driver.}{11}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reading.}{11}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Confirmatory LLM (glm-5.3, $N{=}30$)}{12}{subsection.6.5}\protected@file@percent }
+\newlabel{sec:results-confirm}{{6.5}{12}{Confirmatory LLM (glm-5.3, $N{=}30$)}{subsection.6.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Driver.}{12}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{F01$\times $M-pay (E-20260918-22).}{12}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{F01$\times $M-fs (E-20260918-27).}{12}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{F01$\times $M-mail (E-20260918-33).}{12}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{F02$\times $M-pay (E-20260918-28).}{12}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{F03$\times $M-pay (E-20260918-23).}{13}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reading.}{13}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Confirmatory neko-core seal path (F01$\times $M-pay, $N{=}30$)}{13}{subsection.6.6}\protected@file@percent }
+\newlabel{sec:results-neko-seal}{{6.6}{13}{Confirmatory neko-core seal path (F01$\times $M-pay, $N{=}30$)}{subsection.6.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Driver and pin.}{13}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{F01$\times $M-pay (E-20260918-31).}{13}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reading (honesty).}{13}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}Cross-fault summary}{14}{subsection.6.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.8}Threats to validity (results)}{14}{subsection.6.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.9}Takeaway for RQ1/RQ2}{14}{subsection.6.9}\protected@file@percent }
+\citation{temporal2026agentharness}
+\citation{zylos2026durable}
+\citation{acrfence2026}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion and Limitations}{15}{section.7}\protected@file@percent }
+\newlabel{sec:discussion}{{7}{15}{Discussion and Limitations}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Limits of the present draft}{15}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Q2 journal bar (honest gap list)}{15}{subsection.7.2}\protected@file@percent }
+\newlabel{sec:q2-bar}{{7.2}{15}{Q2 journal bar (honest gap list)}{subsection.7.2}{}}
+\citation{awm2025}
+\citation{acrfence2026}
+\citation{harnessbench2026}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Local-first harness vs Temporal-class engines}{16}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Procedural memory is not control durability}{16}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Threats to validity}{16}{subsection.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Internal.}{16}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{External.}{16}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Construct / statistical.}{16}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Honest next steps (Q2 path).}{16}{section*.34}\protected@file@percent }
+\citation{anthropic2025harnesses}
+\citation{li2026harnesssurvey}
+\citation{guo2026fromqa}
+\citation{minimax2026codecli}
+\citation{minimax2026miniagent}
+\citation{zylos2026durable}
+\citation{temporal2026agentharness}
+\citation{acrfence2026}
+\citation{beyondtokens2026}
+\citation{ac4a2026}
+\citation{awm2025}
+\citation{harnessbench2026}
+\citation{agencybench2026}
+\citation{hal2025}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Related Work}{17}{section.8}\protected@file@percent }
+\newlabel{sec:related}{{8}{17}{Related Work}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Long-running harness practice.}{17}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Durable execution and the outer harness.}{17}{section*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Threats and authority.}{17}{section*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Procedural memory is not control durability.}{17}{section*.38}\protected@file@percent }
+\citation{acrfence2026}
+\citation{temporal2026agentharness}
+\@writefile{toc}{\contentsline {paragraph}{Evaluation methodology.}{18}{section*.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Contribution relative to this map.}{18}{section*.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{18}{section.9}\protected@file@percent }
+\newlabel{sec:conclusion}{{9}{18}{Conclusion}{section.9}{}}
+\newlabel{sec:ai-use}{{9}{18}{AI Use Statement}{section*.41}{}}
+\bibstyle{plainnat}
+\bibdata{refs}
+\bibcite{anthropic2025harnesses}{{1}{2025}{{Anthropic}}{{}}}
+\bibcite{temporal2026agentharness}{{2}{2026}{{Davis}}{{}}}
+\bibcite{guo2026fromqa}{{3}{2026}{{Guo et~al.}}{{Guo, Hao, Wang, Fan, Luo, Li, Gao, Mei, Peng, Xu, Dong, Wu, Zheng, Han, Wang, Xu, and Wang}}}
+\bibcite{hal2025}{{4}{2025}{{Kapoor et~al.}}{{Kapoor, Stroebl, Kirgis, Nadgir, Siegel, Wei, Xue, Chen, Chen, Utpala, Ndzomga, Oruganty, Luskin, Liu, Yu, Arora, Hahm, Trivedi, Sun, Lee, Jin, Mai, Zhou, Zhu, Bommasani, Kang, Song, Henderson, Su, Liang, and Narayanan}}}
+\bibcite{li2026harnesssurvey}{{5}{2026{a}}{{Li et~al.}}{{Li, Xiao, Zhang, Liu, Zhao, Liao, Ji, Wang, Ge, Xu, Fang, Xu, Zhao, Kim, Hamm, Wang, and Reddy}}}
+\bibcite{agencybench2026}{{6}{2026{b}}{{Li et~al.}}{{Li, Shi, Xiao, Jiang, Sun, Wu, Fu, Xia, Cai, Xu, Si, Li, Wang, and Liu}}}
+\bibcite{minimax2026codecli}{{7}{2026{a}}{{MiniMax-AI}}{{}}}
+\bibcite{minimax2026miniagent}{{8}{2026{b}}{{MiniMax-AI}}{{}}}
+\bibcite{ac4a2026}{{9}{2026}{{Sharma and Grossman}}{{}}}
+\bibcite{awm2025}{{10}{2025}{{Wang et~al.}}{{Wang, Mao, Fried, and Neubig}}}
+\bibcite{beyondtokens2026}{{11}{2026}{{Xu et~al.}}{{Xu, Fan, Wang, Li, and Liu}}}
+\bibcite{harnessbench2026}{{12}{2026}{{Yao et~al.}}{{Yao, Tan, Liu, Li, Wang, Yu, Tan, Tian, Zhao, Sun, Zhang, and Yang}}}
+\bibcite{acrfence2026}{{13}{2026}{{Zheng et~al.}}{{Zheng, Yang, Zhang, and Quinn}}}
+\bibcite{zylos2026durable}{{14}{2026}{{Zylos Research}}{{}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Reproducibility}{21}{appendix.A}\protected@file@percent }
+\newlabel{app:repro}{{A}{21}{Reproducibility}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Ethics (Mock-Only)}{21}{appendix.B}\protected@file@percent }
+\newlabel{app:ethics}{{B}{21}{Ethics (Mock-Only)}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Artifact Availability}{22}{appendix.C}\protected@file@percent }
+\newlabel{app:artifact}{{C}{22}{Artifact Availability}{appendix.C}{}}
+\gdef \@abspage@last{22}

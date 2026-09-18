@@ -1,0 +1,164 @@
+\begin{thebibliography}{14}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{Anthropic}(2025)]{anthropic2025harnesses}
+{Anthropic}.
+\newblock Effective harnesses for long-running agents.
+\newblock Engineering blog, 11 2025.
+\newblock URL
+  \url{https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents}.
+\newblock Tier 0; Not Q. Cross-session harness practice (initializer +
+  progress/git handoff).
+
+\bibitem[Davis(2026)]{temporal2026agentharness}
+Cornelia Davis.
+\newblock Temporal agent harness: An early look at durable agent
+  infrastructure.
+\newblock Temporal blog, 8 2026.
+\newblock URL
+  \url{https://temporal.io/blog/temporal-agent-harness-durable-agent-infrastructure}.
+\newblock Tier 0; Not Q. Outer vs inner harness; durable history + policy seam;
+  non-goal baseline (we do not replace Temporal).
+
+\bibitem[Guo et~al.(2026)Guo, Hao, Wang, Fan, Luo, Li, Gao, Mei, Peng, Xu,
+  Dong, Wu, Zheng, Han, Wang, Xu, and Wang]{guo2026fromqa}
+Jianyuan Guo, Zhiwei Hao, Chengcheng Wang, Cheng Fan, Tingzhang Luo, Hongguang
+  Li, Ying Gao, Hefei Mei, Jiankun Peng, Rongjian Xu, Minjing Dong, Han Wu,
+  Mengyu Zheng, Kai Han, Shiqi Wang, Chang Xu, and Yunhe Wang.
+\newblock From question answering to task completion: A survey on agent system
+  and harness design.
+\newblock 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.20683}.
+\newblock Tier 1; Not Q (preprint). Model--harness lens; six runtime
+  responsibilities.
+
+\bibitem[Kapoor et~al.(2025)Kapoor, Stroebl, Kirgis, Nadgir, Siegel, Wei, Xue,
+  Chen, Chen, Utpala, Ndzomga, Oruganty, Luskin, Liu, Yu, Arora, Hahm, Trivedi,
+  Sun, Lee, Jin, Mai, Zhou, Zhu, Bommasani, Kang, Song, Henderson, Su, Liang,
+  and Narayanan]{hal2025}
+Sayash Kapoor, Benedikt Stroebl, Peter Kirgis, Nitya Nadgir, Zachary~S Siegel,
+  Boyi Wei, Tianci Xue, Ziru Chen, Felix Chen, Saiteja Utpala, Franck Ndzomga,
+  Dheeraj Oruganty, Sophie Luskin, Kangheng Liu, Botao Yu, Amit Arora, Dongyoon
+  Hahm, Harsh Trivedi, Huan Sun, Juyong Lee, Tengjun Jin, Yifan Mai, Yifei
+  Zhou, Yuxuan Zhu, Rishi Bommasani, Daniel Kang, Dawn Song, Peter Henderson,
+  Yu~Su, Percy Liang, and Arvind Narayanan.
+\newblock Holistic agent leaderboard: The missing infrastructure for ai agent
+  evaluation.
+\newblock 2025.
+\newblock URL \url{https://arxiv.org/abs/2510.11977}.
+\newblock Tier 2; Not Q (preprint). Holistic agent eval; report model+scaffold;
+  log inspection.
+
+\bibitem[Li et~al.(2026{\natexlab{a}})Li, Xiao, Zhang, Liu, Zhao, Liao, Ji,
+  Wang, Ge, Xu, Fang, Xu, Zhao, Kim, Hamm, Wang, and
+  Reddy]{li2026harnesssurvey}
+Junjie Li, Xi~Xiao, Yunbei Zhang, Chen Liu, Lin Zhao, Xiaoying Liao, Yingrui
+  Ji, Janet Wang, Yingqiang Ge, Weijie Xu, Xi~Fang, Xiang Xu, Tianchen Zhao,
+  Youngeun Kim, Jihun Hamm, Tianyang Wang, and Chandan Reddy.
+\newblock Agent harness engineering: A survey, 2026{\natexlab{a}}.
+\newblock URL \url{https://openreview.net/pdf?id=eONq7FdiHa}.
+\newblock Tier 1; venue status: survey / OpenReview PDF + companion
+  https://picrew.github.io/LLM-Harness/ (ETCLOVG taxonomy); Not confirmed Q
+  journal. Authors from companion citation block 2026-09-18.
+
+\bibitem[Li et~al.(2026{\natexlab{b}})Li, Shi, Xiao, Jiang, Sun, Wu, Fu, Xia,
+  Cai, Xu, Si, Li, Wang, and Liu]{agencybench2026}
+Keyu Li, Junhao Shi, Yang Xiao, Mohan Jiang, Jie Sun, Yunze Wu, Dayuan Fu,
+  Shijie Xia, Xiaojie Cai, Tianze Xu, Weiye Si, Wenjie Li, Dequan Wang, and
+  Pengfei Liu.
+\newblock {AgencyBench}: Benchmarking the frontiers of autonomous agents in
+  1m-token real-world contexts.
+\newblock 2026{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2601.11044}.
+\newblock Tier 2; Not Q (preprint; abs comment: Accepted by ACL 2026 Main).
+  Scaffold / native-ecosystem effects.
+
+\bibitem[{MiniMax-AI}(2026{\natexlab{a}})]{minimax2026codecli}
+{MiniMax-AI}.
+\newblock Minimax code cli.
+\newblock GitHub repository, 2026{\natexlab{a}}.
+\newblock URL \url{https://github.com/MiniMax-AI/minimax-code}.
+\newblock Tier 1 optional; Not Q. OSS terminal coding agent (MIT; HEAD 17b8ded,
+  2026-09-18; npm @minimax-ai/code v0.4.12; CLI mcode). Inspectable
+  allow/deny/ask permission gate (allowOnce/allowAlways); MCP; session history
+  resume. Vendor claims SOTA on FrontierHarness Eval---not reproduced here. No
+  unknown\_outcome, effect journal, or crash-restore Action Replay. Distinct
+  from MiniMax-AI/Mini-Agent. Audited 2026-09-18.
+
+\bibitem[{MiniMax-AI}(2026{\natexlab{b}})]{minimax2026miniagent}
+{MiniMax-AI}.
+\newblock Mini-agent: Minimal single-agent demo harness.
+\newblock GitHub repository, 2026{\natexlab{b}}.
+\newblock URL \url{https://github.com/MiniMax-AI/Mini-Agent}.
+\newblock Tier 1 optional; Not Q. Official MiniMax OSS demo harness (MIT; HEAD
+  d76a4f6, 2026-02-14). Session notes + context summarization + MCP; binary
+  ToolResult. Complementary to Angle A; no unknown\_outcome, authority consume,
+  or effect journal. Distinguish from unofficial npm/PyPI minimax-harness.
+  Audited 2026-09-18.
+
+\bibitem[Sharma and Grossman(2026)]{ac4a2026}
+Reshabh~K Sharma and Dan Grossman.
+\newblock {AC4A}: Access control for agents.
+\newblock 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.20933}.
+\newblock Tier 2; Not Q (preprint). Fine-grained resource permissions for
+  API/browser agents.
+
+\bibitem[Wang et~al.(2025)Wang, Mao, Fried, and Neubig]{awm2025}
+Zora~Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig.
+\newblock Agent workflow memory.
+\newblock In Aarti Singh, Maryam Fazel, Daniel Hsu, Simon Lacoste-Julien, Felix
+  Berkenkamp, Tegan Maharaj, Kiri Wagstaff, and Jerry Zhu, editors,
+  \emph{Proceedings of the 42nd International Conference on Machine Learning},
+  volume 267 of \emph{Proceedings of Machine Learning Research}, pages
+  63897--63911. PMLR, 2025.
+\newblock URL \url{https://proceedings.mlr.press/v267/wang25bx.html}.
+\newblock Tier 1; top-tier conference (not Scopus journal Q). Clarifies
+  procedural workflows $\neq$ our control journal. Also arXiv:2409.07429.
+
+\bibitem[Xu et~al.(2026)Xu, Fan, Wang, Li, and Liu]{beyondtokens2026}
+Jinghan Xu, Longze Fan, Zeyuan Wang, Xinjin Li, and Hankai Liu.
+\newblock Beyond single-use tokens: Durable authorization state for
+  replay-resistant llm agent actions.
+\newblock 2026.
+\newblock URL \url{https://arxiv.org/abs/2608.01710}.
+\newblock Tier 2; Not Q (preprint). Authority consumption / CapLease; semantic
+  replay beyond identifier-local tokens.
+
+\bibitem[Yao et~al.(2026)Yao, Tan, Liu, Li, Wang, Yu, Tan, Tian, Zhao, Sun,
+  Zhang, and Yang]{harnessbench2026}
+Yilun Yao, Xinyu Tan, Chao-Hsuan Liu, Yaoming Li, Zhengyang Wang, Wenhan Yu,
+  Zhewen Tan, Yuxuan Tian, Guangxiang Zhao, Lin Sun, Xiangzheng Zhang, and Tong
+  Yang.
+\newblock Harness-bench: Measuring harness effects across models in realistic
+  agent workflows.
+\newblock 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.27922}.
+\newblock Tier 2; Not Q (preprint). Report model--harness pairs;
+  execution-alignment failures.
+
+\bibitem[Zheng et~al.(2026)Zheng, Yang, Zhang, and Quinn]{acrfence2026}
+Yusheng Zheng, Yiwei Yang, Wei Zhang, and Andi Quinn.
+\newblock Acrfence: Preventing semantic rollback attacks in agent
+  checkpoint-restore.
+\newblock 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.20625}.
+\newblock Tier 0 threat model; venue status: arXiv preprint (journal\_ref
+  CoDAIM workshop 2026 on abs); Not Q. Names Action Replay / Authority
+  Resurrection.
+
+\bibitem[{Zylos Research}(2026)]{zylos2026durable}
+{Zylos Research}.
+\newblock Durable execution for ai agent runtimes: Checkpointing, replay, and
+  recovery.
+\newblock Industry research note, 4 2026.
+\newblock URL
+  \url{https://zylos.ai/research/2026-04-24-durable-execution-agent-runtimes/}.
+\newblock Tier 0; Not Q. Checkpoint $\neq$ durable execution; execution journal
+  / idempotent tool boundaries.
+
+\end{thebibliography}
