@@ -1,14 +1,12 @@
 # protocols/ — fault catalog + experiment protocol
 
-**Status: pending sync.** The canonical `fault-catalog.md` and `experiment-protocol.md`
-live in the lab workspace (wiii-lab, accepted as E-04 per `notes/DECISION-LOG.md` D13)
-and have not yet been synced into this public artifact. They will be added here under
-the same filenames:
+Both protocol documents are present here in full (synced from the lab workspace,
+wiii-lab, accepted as E-04 per `notes/DECISION-LOG.md` D13):
 
-- `protocols/fault-catalog.md` — threat classes T-AR, T-ARes, T-FS, T-LA and faults F01–F03
-- `protocols/experiment-protocol.md` — factorial design (fault × mock × baseline B0–B3), N, seeds, stopping rules
+- [`fault-catalog.md`](./fault-catalog.md) — threat classes T-AR, T-ARes, T-FS, T-LA and faults F01–F10
+- [`experiment-protocol.md`](./experiment-protocol.md) — factorial design (fault × mock × baseline B0–B3), N, seeds, stopping rules
 
-Until then, the same material is available in this repo:
+Related material elsewhere in this repo:
 
 - Formal model (effect state machine, forbidden transitions): [`../outline/formal-model.md`](../outline/formal-model.md)
   (mirror: [`../arxiv-pack/extra/formal-model.md`](../arxiv-pack/extra/formal-model.md))
