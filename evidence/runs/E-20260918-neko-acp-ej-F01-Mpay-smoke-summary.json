@@ -1,0 +1,105 @@
+{
+  "smoke": "neko-core-faithful ACP session/load + EffectJournal/I5 F01×M-pay×{B2,B3}",
+  "n": 1,
+  "driver": "scripted",
+  "restore_mode": "acp-session+effect-journal",
+  "cells": [
+    {
+      "evidence_id": "E-20260918-neko-acp-ej-F01-Mpay-B2",
+      "path": "/workspace/research/wiii-lab/evidence/runs/E-20260918-neko-acp-ej-F01-Mpay-B2",
+      "harness_id": "neko-core@c863cc6+eval-adapter@14cd188+acp-session-load+effect-journal-i5",
+      "baseline": "B2",
+      "metrics": {
+        "duplicate_effect": true,
+        "duplicate_effect_rate": 1,
+        "false_success": false,
+        "false_success_rate": 0,
+        "recovery_latency_ms": 6,
+        "re_approval": false,
+        "re_approval_rate": 0,
+        "authority_resurrection_count": 0,
+        "retry_invoke_count": 1,
+        "seal_unknown_emitted": true
+      },
+      "outcome": "blind_replay_invoked",
+      "charge_count": 2,
+      "seal_text_matches_neko_core": true,
+      "seal_text": "[interrupted while this tool call was in flight; outcome unknown. Inspect actual state before any retry.]",
+      "wasRunning": true,
+      "turnState_after": {
+        "status": "interrupted",
+        "startedAt": "2026-09-18T16:57:06.842Z",
+        "recoveredAt": "2026-09-18T16:57:06.847Z",
+        "lastStopReason": "process_interrupted",
+        "activeToolCallIds": []
+      },
+      "policy": "B2_blind_reinvoke_action_replay",
+      "session_id": "20260918-165706-842-f94161b3cb6e0b28",
+      "effect_journal_from_acp_session": true,
+      "effect_journal_field": "_evalEffectJournal",
+      "lease": {
+        "pre_acquired": true,
+        "restore_acquired": true,
+        "errors": []
+      },
+      "diffs_from_full_neko_session": [
+        "CLOSED: No ACP session activate/persist — now uses real session.ts saveSession/loadSession + ACP-shaped seal/turnState interrupted (acp.ts ~L715–737 mirror)",
+        "CLOSED: EffectJournal persistence was lab-only sidecar — now `_evalEffectJournal` rides the same ACP Session JSON (saveSession critical section); restored before B2/B3; I5 consume still EffectJournal",
+        "No full ACP server / JSON-RPC session/load wire protocol (in-process bridge only)",
+        "No live Provider.complete / runLoop — scripted tool_call fixture only",
+        "ToolRegistry does not execute mock_payment_charge; lab MockToolRegistry does",
+        "EffectJournal + I5 not merged into upstream neko Agent/ToolRegistry (lab class beside ACP restore; dual-stack honesty)",
+        "Crash is in-process CrashSignal, not OS process kill"
+      ]
+    },
+    {
+      "evidence_id": "E-20260918-neko-acp-ej-F01-Mpay-B3",
+      "path": "/workspace/research/wiii-lab/evidence/runs/E-20260918-neko-acp-ej-F01-Mpay-B3",
+      "harness_id": "neko-core@c863cc6+eval-adapter@14cd188+acp-session-load+effect-journal-i5",
+      "baseline": "B3",
+      "metrics": {
+        "duplicate_effect": false,
+        "duplicate_effect_rate": 0,
+        "false_success": false,
+        "false_success_rate": 0,
+        "recovery_latency_ms": 4,
+        "re_approval": false,
+        "re_approval_rate": 0,
+        "authority_resurrection_count": 0,
+        "retry_invoke_count": 0,
+        "seal_unknown_emitted": true
+      },
+      "outcome": "confirmed_via_reconcile",
+      "charge_count": 1,
+      "seal_text_matches_neko_core": true,
+      "seal_text": "[interrupted while this tool call was in flight; outcome unknown. Inspect actual state before any retry.]",
+      "wasRunning": true,
+      "turnState_after": {
+        "status": "interrupted",
+        "startedAt": "2026-09-18T16:57:06.851Z",
+        "recoveredAt": "2026-09-18T16:57:06.854Z",
+        "lastStopReason": "process_interrupted",
+        "activeToolCallIds": []
+      },
+      "policy": "B3_seal_reconcile_no_blind_replay",
+      "session_id": "20260918-165706-851-cc07470b23790bec",
+      "effect_journal_from_acp_session": true,
+      "effect_journal_field": "_evalEffectJournal",
+      "lease": {
+        "pre_acquired": true,
+        "restore_acquired": true,
+        "errors": []
+      },
+      "diffs_from_full_neko_session": [
+        "CLOSED: No ACP session activate/persist — now uses real session.ts saveSession/loadSession + ACP-shaped seal/turnState interrupted (acp.ts ~L715–737 mirror)",
+        "CLOSED: EffectJournal persistence was lab-only sidecar — now `_evalEffectJournal` rides the same ACP Session JSON (saveSession critical section); restored before B2/B3; I5 consume still EffectJournal",
+        "No full ACP server / JSON-RPC session/load wire protocol (in-process bridge only)",
+        "No live Provider.complete / runLoop — scripted tool_call fixture only",
+        "ToolRegistry does not execute mock_payment_charge; lab MockToolRegistry does",
+        "EffectJournal + I5 not merged into upstream neko Agent/ToolRegistry (lab class beside ACP restore; dual-stack honesty)",
+        "Crash is in-process CrashSignal, not OS process kill"
+      ]
+    }
+  ],
+  "non_claim": "N=1 adapter ACP+journal smoke only — not confirmatory; not LLM; not process-kill; do not mix with old …+acp-session-load rows without table break; journal not merged into upstream Agent"
+}
