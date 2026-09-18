@@ -1,0 +1,86 @@
+{
+  "smoke": "sandbox-ledger Option A F01\u00d7M-pay\u00d7{B2,B3} via ACP",
+  "evidence_id": "E-20260918-53",
+  "n": 1,
+  "driver": "scripted",
+  "mpay_backend": "sandbox-ledger",
+  "unit_ledger": {
+    "ok": true,
+    "without_idem": 2,
+    "with_same_idem": 1,
+    "receiptPath": "/tmp/wiii-sandbox-ledger-unit/receipts.jsonl"
+  },
+  "cells": [
+    {
+      "evidence_id": "E-20260918-sandbox-ledger-F01-Mpay-B2",
+      "path": "/workspace/research/wiii-lab/evidence/runs/E-20260918-sandbox-ledger-F01-Mpay-B2",
+      "harness_id": "neko-core@c863cc6+eval-adapter@14cd188+acp-session-load+effect-journal-i5",
+      "baseline": "B2",
+      "mpay_backend": "sandbox-ledger",
+      "metrics": {
+        "duplicate_effect": true,
+        "duplicate_effect_rate": 1,
+        "false_success": false,
+        "false_success_rate": 0,
+        "recovery_latency_ms": 7,
+        "re_approval": false,
+        "re_approval_rate": 0,
+        "authority_resurrection_count": 0,
+        "retry_invoke_count": 1,
+        "seal_unknown_emitted": true
+      },
+      "outcome": "blind_replay_invoked",
+      "charge_count": 2,
+      "receipt_count": 2,
+      "receipt_ids": [
+        "rcpt_398f54dc4e0247e2aeaaaeaa",
+        "rcpt_1ae47b6ce351492e8bd59e5a"
+      ],
+      "receiptPath": "/tmp/wiii-neko-acp-adapter/E-20260918-sandbox-ledger-F01-Mpay-B2/421cfc2a-56e8-4494-a9d5-a1abaa956db7/mpay-ledger/receipts.jsonl",
+      "seal_text_matches_neko_core": true,
+      "policy": "B2_blind_reinvoke_action_replay"
+    },
+    {
+      "evidence_id": "E-20260918-sandbox-ledger-F01-Mpay-B3",
+      "path": "/workspace/research/wiii-lab/evidence/runs/E-20260918-sandbox-ledger-F01-Mpay-B3",
+      "harness_id": "neko-core@c863cc6+eval-adapter@14cd188+acp-session-load+effect-journal-i5",
+      "baseline": "B3",
+      "mpay_backend": "sandbox-ledger",
+      "metrics": {
+        "duplicate_effect": false,
+        "duplicate_effect_rate": 0,
+        "false_success": false,
+        "false_success_rate": 0,
+        "recovery_latency_ms": 4,
+        "re_approval": false,
+        "re_approval_rate": 0,
+        "authority_resurrection_count": 0,
+        "retry_invoke_count": 0,
+        "seal_unknown_emitted": true
+      },
+      "outcome": "confirmed_via_reconcile",
+      "charge_count": 1,
+      "receipt_count": 1,
+      "receipt_ids": [
+        "rcpt_a8ea1ff302dd4392801f0e86"
+      ],
+      "receiptPath": "/tmp/wiii-neko-acp-adapter/E-20260918-sandbox-ledger-F01-Mpay-B3/b43f32df-bc2d-43b7-b128-7eba3299262a/mpay-ledger/receipts.jsonl",
+      "seal_text_matches_neko_core": true,
+      "policy": "B3_seal_reconcile_no_blind_replay"
+    }
+  ],
+  "rates": {
+    "B2": {
+      "duplicate_effect": true,
+      "charge_count": 2,
+      "receipt_count": 2
+    },
+    "B3": {
+      "duplicate_effect": false,
+      "charge_count": 1,
+      "receipt_count": 1,
+      "seal_reconcile": true
+    }
+  },
+  "non_claim": "N=1 sandbox-ledger smoke only \u2014 durable local JSONL receipts, not a real PSP; not confirmatory N=30; do not pool with mpay_backend=memory-counter without factor line"
+}
